@@ -1,0 +1,166 @@
+// Léo platform · Prisma schema · matches docs/DATABASE.md
+// Dev: SQLite. Prod: switch provider to "postgresql" (schema is PG-safe).
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id           String   @id @default(cuid())
+  email        String   @unique
+  passwordHash String
+  createdAt    DateTime @default(now())
+  profile      Profile?
+  progress     LessonProgress[]
+  attempts     Attempt[]
+  srsCards     SrsCard[]
+  badges       UserBadge[]
+  dailyStats   DailyStat[]
+}
+
+model Profile {
+  userId        String  @id
+  user          User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  displayName   String
+  avatar        String  @default("🦊")
+  dailyGoalXp   Int     @default(50)
+  theme         String  @default("system") // light|dark|system
+  tz            String  @default("Europe/Paris")
+  xp            Int     @default(0)
+  coins         Int     @default(0)
+  gems          Int     @default(0)
+  streak        Int     @default(0)
+  streakBest    Int     @default(0)
+  lastStudyDate String? // YYYY-MM-DD in profile tz
+}
+
+model Level {
+  id      String   @id @default(cuid())
+  code    String   @unique // A1..C1
+  title   String
+  sort    Int
+  modules Module[]
+}
+
+model Module {
+  id       String   @id @default(cuid())
+  level    Level    @relation(fields: [levelId], references: [id])
+  levelId  String
+  sort     Int
+  title    String
+  lessons  Lesson[]
+}
+
+model Lesson {
+  id             String  @id @default(cuid())
+  module         Module  @relation(fields: [moduleId], references: [id])
+  moduleId       String
+  sort           Int
+  number         Int     @unique // 1..84 global order
+  title          String
+  objective      String
+  grammarTitle   String
+  grammarBody    String  // JSON string[]
+  grammarExamples String // JSON {fr,en,pron}[]
+  dialogue       String  // JSON {scene,lines[]}
+  videoQuery     String
+  writingPrompt  String
+  vocab          VocabItem[]
+  progress       LessonProgress[]
+}
+
+model VocabItem {
+  id          String  @id @default(cuid())
+  lesson      Lesson  @relation(fields: [lessonId], references: [id])
+  lessonId    String
+  idx         Int
+  fr          String
+  en          String
+  pron        String
+  exampleFr   String
+  exampleEn   String
+  examplePron String
+  srsCards    SrsCard[]
+
+  @@index([lessonId, idx])
+}
+
+model LessonProgress {
+  id           String   @id @default(cuid())
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId       String
+  lesson       Lesson   @relation(fields: [lessonId], references: [id])
+  lessonId     String
+  stars        Int      @default(0)
+  bestAccuracy Int      @default(0)
+  attempts     Int      @default(0)
+  completedAt  DateTime @default(now())
+
+  @@unique([userId, lessonId])
+}
+
+model Attempt {
+  id        String   @id @default(cuid())
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId    String
+  lessonNumber Int?
+  qType     String
+  skill     String
+  correct   Boolean
+  createdAt DateTime @default(now())
+
+  @@index([userId, createdAt])
+}
+
+model SrsCard {
+  id          String    @id @default(cuid())
+  user        User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId      String
+  vocab       VocabItem @relation(fields: [vocabItemId], references: [id])
+  vocabItemId String
+  intervalIdx Int       @default(-1)
+  dueAt       DateTime  @default(now())
+  reps        Int       @default(0)
+  lapses      Int       @default(0)
+
+  @@unique([userId, vocabItemId])
+  @@index([userId, dueAt])
+}
+
+model BadgeDef {
+  id     String      @id @default(cuid())
+  code   String      @unique
+  title  String
+  emoji  String
+  rule   String
+  users  UserBadge[]
+}
+
+model UserBadge {
+  userId   String
+  badgeId  String
+  earnedAt DateTime @default(now())
+  user     User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  badge    BadgeDef @relation(fields: [badgeId], references: [id])
+
+  @@id([userId, badgeId])
+}
+
+model DailyStat {
+  id       String @id @default(cuid())
+  user     User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId   String
+  date     String // YYYY-MM-DD
+  xp       Int    @default(0)
+  minutes  Int    @default(0)
+  lessons  Int    @default(0)
+  correct  Int    @default(0)
+  answered Int    @default(0)
+  skills   String @default("{}") // JSON per-skill sums
+
+  @@unique([userId, date])
+}

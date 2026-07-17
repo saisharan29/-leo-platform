@@ -1,0 +1,37 @@
+{
+  "name": "leo-platform",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint",
+    "test": "vitest run",
+    "db:migrate": "node db/seed.mjs",
+    "db:seed": "node db/seed.mjs",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "bcryptjs": "2.4.3",
+    "next": "14.2.25",
+    "next-auth": "4.24.11",
+    "pino": "^10.3.1",
+    "react": "18.3.1",
+    "react-dom": "18.3.1",
+    "recharts": "^3.9.2",
+    "zod": "3.23.8"
+  },
+  "devDependencies": {
+    "@types/bcryptjs": "2.4.6",
+    "@types/node": "20.17.6",
+    "@types/react": "18.3.12",
+    "@types/react-dom": "18.3.1",
+    "autoprefixer": "10.4.20",
+    "pngjs": "^7.0.0",
+    "postcss": "8.4.49",
+    "tailwindcss": "3.4.15",
+    "typescript": "5.6.3",
+    "vitest": "2.1.8"
+  }
+}

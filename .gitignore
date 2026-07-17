@@ -1,0 +1,18 @@
+node_modules/
+.next/
+out/
+
+# local databases
+*.db
+*.db-shm
+*.db-wal
+
+# env
+.env
+.env.local
+.env.production
+
+# misc
+.DS_Store
+npm-debug.log*
+coverage/

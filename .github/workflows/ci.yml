@@ -1,0 +1,38 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Typecheck
+        run: npm run typecheck
+
+      - name: Unit & integration tests
+        run: npm test
+
+      - name: Seed a build-time database
+        run: node db/seed.mjs
+        env:
+          DATABASE_FILE: ${{ github.workspace }}/ci.db
+
+      - name: Production build
+        run: npm run build
+        env:
+          DATABASE_FILE: ${{ github.workspace }}/ci.db
+          NEXTAUTH_SECRET: ci-only-secret-not-for-production
+          NEXTAUTH_URL: http://localhost:3000
