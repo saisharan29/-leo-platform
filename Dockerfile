@@ -19,7 +19,8 @@ RUN DATABASE_FILE=/app/build.db node db/seed.mjs \
 FROM node:22-alpine AS runner
 WORKDIR /app
 ENV NODE_ENV=production NEXT_TELEMETRY_DISABLED=1
-RUN addgroup -S leo && adduser -S leo -G leo
+RUN addgroup -S leo && adduser -S leo -G leo \
+ && mkdir -p /data && chown -R leo:leo /data
 
 COPY --from=deps /app/node_modules ./node_modules
 COPY --from=build /app/.next ./.next
