@@ -39,7 +39,7 @@ export default function LoginPage() {
   return (
     <Card className="pop-in w-full max-w-md p-8">
       <div className="mb-1 flex items-center gap-3">
-        <span className="text-4xl lg:hidden" aria-hidden="true">🦊</span>
+        <span className="text-4xl lg:hidden" aria-hidden="true">🐓</span>
         <h1 className="font-display text-3xl font-bold">Welcome back</h1>
       </div>
       <p className="text-ink2 mb-6">Your streak missed you. Sign in to keep it alive 🔥</p>

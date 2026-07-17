@@ -31,7 +31,7 @@ export default async function MapPage() {
   return (
     <div className="mx-auto max-w-2xl">
       <div className="pop-in flex items-center gap-4">
-        <span className="float-y text-5xl" aria-hidden="true">🦊</span>
+        <span className="float-y text-5xl" aria-hidden="true">{profile?.avatar ?? "🐓"}</span>
         <div>
           <h1 className="font-display text-3xl font-bold">Your path to C1</h1>
           <p className="mt-0.5 text-ink2">

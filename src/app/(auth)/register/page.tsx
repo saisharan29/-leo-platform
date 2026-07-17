@@ -72,10 +72,10 @@ export default function RegisterPage() {
   return (
     <Card className="pop-in w-full max-w-md p-8">
       <div className="mb-1 flex items-center gap-3">
-        <span className="text-4xl lg:hidden" aria-hidden="true">🦊</span>
+        <span className="text-4xl lg:hidden" aria-hidden="true">🐓</span>
         <h1 className="font-display text-3xl font-bold">Create your account</h1>
       </div>
-      <p className="text-ink2 mb-6">Lesson 1 takes 15 minutes. Léo does the remembering.</p>
+      <p className="text-ink2 mb-6">Lesson 1 takes 15 minutes. Pick your mascot once you\u2019re in.</p>
       <div className="flex flex-col gap-4">
         <Input
           label="Name"

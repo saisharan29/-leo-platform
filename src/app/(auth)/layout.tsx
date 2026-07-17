@@ -17,7 +17,7 @@ export default function AuthLayout({ children }: { children: React.ReactNode }) 
         <div className="font-display text-2xl font-bold text-bleu pop-in">Léo</div>
 
         <div className="relative max-w-md">
-          <div className="float-y w-fit text-7xl drop-shadow-sm" aria-hidden="true">🦊</div>
+          <div className="float-y w-fit text-7xl drop-shadow-sm" aria-hidden="true">🐓</div>
           <h1 className="mt-6 font-display text-4xl font-bold pop-in">
             French, from your first{" "}
             <span lang="fr" className="relative inline-block text-bleu">

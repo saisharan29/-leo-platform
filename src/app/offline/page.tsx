@@ -5,7 +5,7 @@ export const metadata = { title: "Offline" };
 export default function OfflinePage() {
   return (
     <main className="flex min-h-dvh flex-col items-center justify-center gap-4 p-6 text-center">
-      <p className="text-5xl" aria-hidden="true">🦊</p>
+      <p className="text-5xl" aria-hidden="true">🐓</p>
       <h1 className="font-display text-3xl font-bold">You're offline</h1>
       <p className="max-w-sm text-ink2">
         Pages you downloaded still work — anything else needs a connection. Progress made online is

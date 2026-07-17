@@ -36,7 +36,7 @@ export default async function DashboardPage() {
   return (
     <div className="flex flex-col gap-6">
       <section className="flex items-start gap-4">
-        <span className="float-y hidden text-6xl sm:block" aria-hidden="true">🦊</span>
+        <span className="float-y hidden text-6xl sm:block" aria-hidden="true">{profile.avatar}</span>
         <div>
         <h1 className="font-display text-3xl font-bold pop-in">
           Bonjour, {profile.display_name} <span className="inline-block origin-[70%_70%] wiggle-target" aria-hidden="true">👋</span>
@@ -126,14 +126,14 @@ export default async function DashboardPage() {
         {nextLesson ? (
           <Link
             href={`/lesson/${nextLesson.number}`}
-            className="chunky chunky-bleu inline-flex h-14 items-center gap-2 rounded-input bg-bleu px-7 py-3 text-lg font-extrabold text-white"
+            className="chunky chunky-bleu inline-flex min-h-14 shrink-0 items-center gap-2 whitespace-nowrap rounded-input bg-bleu px-7 py-3 text-lg font-extrabold text-white"
           >
             <span className="bounce-soft" aria-hidden="true">🚀</span> Start lesson {nextLesson.number}
           </Link>
         ) : (
           <Link
             href="/map"
-            className="chunky chunky-bleu inline-flex h-14 items-center rounded-input bg-bleu px-7 py-3 text-lg font-extrabold text-white"
+            className="chunky chunky-bleu inline-flex min-h-14 shrink-0 items-center whitespace-nowrap rounded-input bg-bleu px-7 py-3 text-lg font-extrabold text-white"
           >
             Review lessons
           </Link>

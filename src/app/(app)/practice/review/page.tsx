@@ -62,7 +62,7 @@ export default function ReviewPage() {
     return (
       <div className="mx-auto max-w-md text-center">
         <p className="text-5xl" aria-hidden="true">
-          🦊
+          🐓
         </p>
         <h1 className="mt-2 font-display text-2xl font-bold">Nothing due right now</h1>
         <p className="mt-1 text-ink2">

@@ -4,12 +4,13 @@ import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { signOut } from "next-auth/react";
+import { MascotPicker } from "@/components/domain/mascot-picker";
 
 const NAV = [
   { href: "/dashboard", label: "Home", emoji: "🏠" },
   { href: "/map", label: "Lessons", emoji: "🗺️" },
   { href: "/practice", label: "Practice", emoji: "🎯" },
-  { href: "/tutor", label: "Tutor", emoji: "🦊" },
+  { href: "/tutor", label: "Tutor", emoji: "🐓" },
   { href: "/plan", label: "Plan", emoji: "📅" },
   { href: "/reports", label: "Reports", emoji: "📈" },
   { href: "/search", label: "Search", emoji: "🔎" },
@@ -31,6 +32,7 @@ export function AppShell({
 }) {
   const pathname = usePathname();
   const [menuOpen, setMenuOpen] = useState(false);
+  const [pickerOpen, setPickerOpen] = useState(false);
   const [dark, setDark] = useState(false);
   const menuRef = useRef<HTMLDivElement>(null);
 
@@ -73,7 +75,7 @@ export function AppShell({
             className="font-display text-xl font-bold text-bleu"
             aria-label="Léo — home"
           >
-            Léo <span aria-hidden="true">🦊</span>
+            Léo <span aria-hidden="true">🐓</span>
           </Link>
 
           <nav className="flex items-center gap-1" aria-label="Main">
@@ -138,6 +140,14 @@ export function AppShell({
                   <button
                     type="button"
                     role="menuitem"
+                    onClick={() => { setMenuOpen(false); setPickerOpen(true); }}
+                    className="w-full rounded-input px-3 py-2 text-left text-sm font-semibold hover:bg-craie/50"
+                  >
+                    Change mascot {avatar}
+                  </button>
+                  <button
+                    type="button"
+                    role="menuitem"
                     onClick={toggleTheme}
                     className="w-full rounded-input px-3 py-2 text-left text-sm font-semibold hover:bg-craie/50"
                   >
@@ -159,6 +169,7 @@ export function AppShell({
       </header>
 
       <main id="main" className="mx-auto w-full max-w-[1120px] flex-1 px-4 py-8">{children}</main>
+      <MascotPicker current={avatar} open={pickerOpen} onClose={() => setPickerOpen(false)} />
     </div>
   );
 }
